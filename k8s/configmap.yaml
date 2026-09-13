@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: outbox-processor-config
+data:
+  Outbox__QueueUrl: REPLACE_WITH_NOTIFICATIONS_QUEUE_URL
+  Outbox__Region: us-east-1
+  Outbox__BatchSize: "20"
+  Outbox__PollIntervalSeconds: "5"
+  Outbox__RetryDelayMinutes: "15"
+  Outbox__SuccessfulRetentionDays: "7"

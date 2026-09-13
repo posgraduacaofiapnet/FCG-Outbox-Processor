@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-outbox-processor
+spec:
+  selector:
+    app: users-outbox-processor
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-outbox-processor
+spec:
+  selector:
+    app: catalog-outbox-processor
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
