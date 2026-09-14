@@ -15,8 +15,8 @@ spec:
       serviceAccountName: fcg-outbox-processor
       containers:
         - name: outbox-processor
-          image: fcg-outbox-processor:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/posgraduacaofiapnet/fcg-outbox-processor:latest
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8080
