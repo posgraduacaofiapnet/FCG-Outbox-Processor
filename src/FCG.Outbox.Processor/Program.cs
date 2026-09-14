@@ -25,7 +25,14 @@ builder.Services
     .ValidateOnStart();
 
 var region = builder.Configuration[$"{OutboxOptions.SectionName}:Region"] ?? "us-east-1";
-builder.Services.AddSingleton<IAmazonSQS>(_ => new AmazonSQSClient(RegionEndpoint.GetBySystemName(region)));
+var serviceUrl = builder.Configuration[$"{OutboxOptions.SectionName}:ServiceUrl"];
+builder.Services.AddSingleton<IAmazonSQS>(_ => string.IsNullOrWhiteSpace(serviceUrl)
+    ? new AmazonSQSClient(RegionEndpoint.GetBySystemName(region))
+    : new AmazonSQSClient(new AmazonSQSConfig
+    {
+        ServiceURL = serviceUrl,
+        AuthenticationRegion = region
+    }));
 builder.Services.AddSingleton<IOutboxRepository, SqlOutboxRepository>();
 builder.Services.AddSingleton<IOutboxPublisher, SqsOutboxPublisher>();
 builder.Services.AddHostedService<OutboxDispatcherWorker>();
